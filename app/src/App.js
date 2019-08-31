@@ -6,6 +6,7 @@ const domain = 'http://localhost:3001'
 
 class App extends PureComponent {
   state = {
+    teams: [],
     players: []
   }
 
@@ -17,10 +18,18 @@ class App extends PureComponent {
       .then(players => {
         this.setState({ players: players.players })
       });
+
+    fetch(`${domain}/teams`)
+      .then(response => {
+        return response.json();
+      })
+      .then(teams => {
+        this.setState({ teams })
+      });
   }
 
   render() {
-    const { players } = this.state;
+    const { teams, players } = this.state;
 
     return <div className="App">
       <header className="App-heading App-flex">
@@ -41,9 +50,16 @@ class App extends PureComponent {
             Vamos a pasar a darle diseño. Crea el diseño propuesto en el readme con los requerimientos que se necesite.
             Guiate por las imágenes.
            */}
-          {players.map((player, index) => 
-            <li key={index}>
-              {player.name}
+          {players.map((player,index) => 
+            <li className="info-player" key={index}>
+              <div className="info-player__general">
+                <img src={player.img}/>
+                <div className="info-player__name">
+                  <p className="name"><span>{player.name}</span><span className="position">{player.position}</span></p>
+                  <p className="team">{teams.length > 0 ? teams[player.teamId - 1].name : ''}</p>
+                </div>
+              </div>
+              <div className="info-player__shield"><img src={teams.length > 0 ? teams[player.teamId - 1].shield : '#'}/></div>
           </li>)}
         </ul>
       </div>

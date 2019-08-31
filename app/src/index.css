@@ -6,3 +6,92 @@ body {
   margin: 0;
   padding: 0;
 }
+/* Estilos ejercicios 3 */
+ul, li {
+  list-style: none;
+}
+ul {
+  flex-wrap: wrap;
+  display: flex;
+  padding: 0;
+}
+li {
+  flex: 0 0 98%
+}
+.info-player {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #d6d6c2;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 25px 0;
+  min-width: 280px;
+}
+
+.info-player__general {
+  display: flex;
+  flex-direction: row;
+  flex: 3;
+}
+
+.info-player__general > img {
+  max-width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  align-self: center;
+}
+.info-player__name {
+  flex: 3;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.info-player__shield {
+  align-self: flex-start;
+}
+
+.info-player__shield > img {
+  width: 20px;
+}
+
+.name {
+  margin-bottom: 0;
+}
+
+.position {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.team {
+  font-size: 12px;
+}
+
+@media (min-width: 600px) {
+  .info-player__general {
+    flex-direction: column;
+  }
+  .info-player__general > img {
+    max-width: 170px;
+    height: 170px;
+  }
+  .info-player__name {
+    align-self: center;
+  }
+  .team {
+    text-align: center;
+  }
+}
+
+@media (min-width: 900px) {
+  li.info-player {
+    flex: 0 0 43%;
+    margin: 15px;
+  }
+}
+
+@media (min-width: 1200px) {
+  li.info-player {
+    flex: 0 0 28%;
+  }
+}
