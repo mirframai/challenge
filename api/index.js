@@ -208,6 +208,17 @@ app.get('/teams', function (req, res) {
 });
 
 app.get('/players', function (req, res) {
+  let players = [];
+  Object.values(teamsMap).forEach((team, indexTeam) => {
+    teamPlayers = team.players.map((player,indexPlayer) => ({
+        name: player.name,
+        position: POSITIONS_STRING[player.position],
+        img: (indexTeam !== 2) ? (player.img || player.url) : atleticoImages[`${indexTeam + 1}${indexPlayer + 1}`],
+        teamId: indexTeam + 1
+    }));
+    players = [...players, ...teamPlayers];    
+  });
+
   // TODO ejercicio 1
   // devuelve un array con los jugadores, con la sigueinte pinta
   // [
@@ -220,7 +231,7 @@ app.get('/players', function (req, res) {
   // ]
   // TIP: familiarizate primero con los objetos de los equipos: var madrid, barcelona y atletico.
   // TIP2: asegurate que position no es el código de la posición, si no el string
-  res.json({})
+  res.json({players})
 });
 
 app.get('/pichichis', function (req, res) {
