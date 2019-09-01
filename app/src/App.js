@@ -11,6 +11,7 @@ class App extends PureComponent {
     super(props);
     this.toggleModalVisibility = this.toggleModalVisibility.bind(this);
     this.getPichichisName = this.getPichichisName.bind(this);
+    this.order = this.order.bind(this);
   }
   state = {
     teams: [],
@@ -49,7 +50,7 @@ class App extends PureComponent {
     const { teams, players, isModalVisible, pichichis } = this.state;
     let modal;
     if (isModalVisible) {
-      modal = <Modal toggleModal={this.toggleModalVisibility} pichichis={pichichis}/>
+      modal = <Modal toggleModal={this.toggleModalVisibility} pichichis={pichichis} order={this.order}/>
     }
 
     return <div className="App">
@@ -112,7 +113,24 @@ class App extends PureComponent {
       });
     }
     this.setState({pichichis: newPichichis});
+  }
 
+  order(orderByAsc) {
+    let pichichis = this.state.pichichis;
+      pichichis = pichichis.sort((pichichi1, pichichi2) => {
+        const p1 = parseInt(pichichi1.goals);
+        const p2 = parseInt(pichichi2.goals);
+        return this.sortArray(p1, p2, orderByAsc);
+      });
+    this.setState({ pichichis });
+  }
+
+  sortArray(p1, p2, sortAsc) {
+    if (sortAsc) {
+      return (p2 > p1) ? 1 : ((p1 > p2) ? -1 : 0);
+    } else {
+      return (p1 > p2) ? 1 : ((p2 > p1) ? -1 : 0);
+    }
   }
 }
 

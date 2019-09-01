@@ -6,6 +6,15 @@ const domain = 'http://localhost:3001'
 
 export class Modal extends PureComponent {
 
+    constructor(props) {
+        super(props);
+        this.order = this.order.bind(this);
+    }
+
+    state = {
+        orderByAsc: false,
+    }
+
     render() {
         const { pichichis } = this.props;
 
@@ -32,9 +41,16 @@ export class Modal extends PureComponent {
                     </div>
                     <div className="cancel-button">
                         <button onClick={this.props.toggleModal}>Cancelar</button>
+                        // No encuentro la flecha propuesta en los visuales, asi que pongo texto
+                        <button onClick={this.order}>Ordenar {!this.state.orderByAsc ? 'up' : 'down'}</button>
                     </div>
                 </div>
             </div>
         )
+    }
+
+    order() {
+        this.props.order(!this.state.orderByAsc);
+        this.setState({orderByAsc: !this.state.orderByAsc});
     }
 }
