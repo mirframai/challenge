@@ -10,10 +10,12 @@ class App extends PureComponent {
   constructor(props) {
     super(props);
     this.toggleModalVisibility = this.toggleModalVisibility.bind(this);
+    this.getPichichisName = this.getPichichisName.bind(this);
   }
   state = {
     teams: [],
     players: [],
+    pichichis: [],
     isModalVisible: false
   }
 
@@ -23,7 +25,7 @@ class App extends PureComponent {
         return response.json();
       })
       .then(players => {
-        this.setState({ players: players.players })
+          this.setState({ players: players.players });
       });
 
     fetch(`${domain}/teams`)
@@ -33,13 +35,21 @@ class App extends PureComponent {
       .then(teams => {
         this.setState({ teams })
       });
+
+    fetch(`${domain}/pichichis`)
+      .then(response => {
+        return response.json();
+      })
+      .then(pichichis => {
+        this.getPichichisName(pichichis);        
+      });
   }
 
   render() {
-    const { teams, players, isModalVisible } = this.state;
+    const { teams, players, isModalVisible, pichichis } = this.state;
     let modal;
     if (isModalVisible) {
-      modal = <Modal toggleModal={this.toggleModalVisibility}/>
+      modal = <Modal toggleModal={this.toggleModalVisibility} pichichis={pichichis}/>
     }
 
     return <div className="App">
@@ -83,7 +93,26 @@ class App extends PureComponent {
   }
 
   toggleModalVisibility() {
+    if (!this.state.isModalVisible && typeof this.state.pichichis[0].name === 'undefined') {
+      this.getPichichisName(this.state.pichichis);
+    }
     this.setState({isModalVisible: !this.state.isModalVisible});
+  }
+
+  getPichichisName(pichichis) {
+    let newPichichis = pichichis;
+    if (this.state.players.length > 0) {
+      newPichichis = newPichichis.map(pichichi => {
+        let newPichichi = {...pichichi};
+        const pichichiName = this.state.players.find(player => player.id === pichichi.playerId);
+        if (pichichiName) {
+          newPichichi.name = pichichiName.name;
+        }
+        return newPichichi;
+      });
+    }
+    this.setState({pichichis: newPichichis});
+
   }
 }
 

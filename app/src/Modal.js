@@ -7,12 +7,28 @@ const domain = 'http://localhost:3001'
 export class Modal extends PureComponent {
 
     render() {
+        const { pichichis } = this.props;
+
         return (
             <div className="modal">
                 <div className="modal-content">
                     <div className="modal-scroll">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Player Name</th>
+                                    <th>Goals</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {pichichis.map(pichichi => 
+                                <tr key={pichichi.playerId}>
+                                    <td>{pichichi.name}</td>
+                                    <td>{pichichi.goals}</td>
+                                </tr>
+                                )}
+                            </tbody>                            
+                        </table>
                     </div>
                     <div className="cancel-button">
                         <button onClick={this.props.toggleModal}>Cancelar</button>

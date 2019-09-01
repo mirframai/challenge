@@ -211,6 +211,7 @@ app.get('/players', function (req, res) {
   let players = [];
   Object.values(teamsMap).forEach((team, indexTeam) => {
     teamPlayers = team.players.map((player,indexPlayer) => ({
+        id: player.id,
         name: player.name,
         position: POSITIONS_STRING[player.position],
         img: (indexTeam !== 2) ? (player.img || player.url) : atleticoImages[`${indexTeam + 1}${indexPlayer + 1}`],
