@@ -2,12 +2,19 @@ import reactSvg from './react.svg'
 import './App.css'
 
 import React, { PureComponent } from 'react'
+import { Modal } from './Modal';
 const domain = 'http://localhost:3001'
 
 class App extends PureComponent {
+
+  constructor(props) {
+    super(props);
+    this.toggleModalVisibility = this.toggleModalVisibility.bind(this);
+  }
   state = {
     teams: [],
-    players: []
+    players: [],
+    isModalVisible: false
   }
 
   componentDidMount() {
@@ -29,11 +36,15 @@ class App extends PureComponent {
   }
 
   render() {
-    const { teams, players } = this.state;
+    const { teams, players, isModalVisible } = this.state;
+    let modal;
+    if (isModalVisible) {
+      modal = <Modal toggleModal={this.toggleModalVisibility}/>
+    }
 
     return <div className="App">
       <header className="App-heading App-flex">
-        <button>Pichichis</button>
+        <button onClick={this.toggleModalVisibility}>Pichichis</button>
       </header>
       <div className="App-teams App-flex">
         {/* 
@@ -67,7 +78,12 @@ class App extends PureComponent {
         <img className="App-logo" src={reactSvg}/>
         <p>Edit <code>src/App.js</code> and save to hot reload your changes.</p>
       </div>
+      {modal}
     </div>
+  }
+
+  toggleModalVisibility() {
+    this.setState({isModalVisible: !this.state.isModalVisible});
   }
 }
 
