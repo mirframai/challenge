@@ -3,6 +3,7 @@ import './App.css'
 
 import React, { PureComponent } from 'react'
 import { Modal } from './Modal';
+import { TransferModal } from './TransferModal';
 const domain = 'http://localhost:3001'
 
 class App extends PureComponent {
@@ -12,12 +13,15 @@ class App extends PureComponent {
     this.toggleModalVisibility = this.toggleModalVisibility.bind(this);
     this.getPichichisName = this.getPichichisName.bind(this);
     this.order = this.order.bind(this);
+    this.toggleTransferModal = this.toggleTransferModal.bind(this);
+    this.toggleModalTransferVisibility = this.toggleModalTransferVisibility.bind(this);
   }
   state = {
     teams: [],
     players: [],
     pichichis: [],
-    isModalVisible: false
+    isModalVisible: false,
+    isTransferModalVisible: false,
   }
 
   componentDidMount() {
@@ -47,10 +51,12 @@ class App extends PureComponent {
   }
 
   render() {
-    const { teams, players, isModalVisible, pichichis } = this.state;
-    let modal;
+    const { teams, players, isModalVisible, pichichis, isTransferModalVisible } = this.state;
+    let modal, transferModal;
     if (isModalVisible) {
       modal = <Modal toggleModal={this.toggleModalVisibility} pichichis={pichichis} order={this.order}/>
+    } else if (isTransferModalVisible) {
+      transferModal = <TransferModal toggleModal={this.toggleModalTransferVisibility} teams={teams} players={players}></TransferModal>
     }
 
     return <div className="App">
@@ -73,7 +79,7 @@ class App extends PureComponent {
             Guiate por las imágenes.
            */}
           {players.map((player,index) => 
-            <li className="info-player" key={index}>
+            <li className="info-player" key={index} onClick={this.toggleTransferModal}>
               <div className="info-player__general">
                 <img src={player.img}/>
                 <div className="info-player__name">
@@ -90,6 +96,7 @@ class App extends PureComponent {
         <p>Edit <code>src/App.js</code> and save to hot reload your changes.</p>
       </div>
       {modal}
+      {transferModal}
     </div>
   }
 
@@ -99,6 +106,11 @@ class App extends PureComponent {
     }
     this.setState({isModalVisible: !this.state.isModalVisible});
   }
+
+  toggleModalTransferVisibility() {
+    this.setState({isTransferModalVisible: !this.state.isTransferModalVisible});
+  }
+
 
   getPichichisName(pichichis) {
     let newPichichis = pichichis;
@@ -131,6 +143,10 @@ class App extends PureComponent {
     } else {
       return (p1 > p2) ? 1 : ((p2 > p1) ? -1 : 0);
     }
+  }
+
+  toggleTransferModal() {
+    this.setState({isTransferModalVisible: !this.state.isTransferModalVisible});
   }
 }
 
