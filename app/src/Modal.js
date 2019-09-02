@@ -41,7 +41,6 @@ export class Modal extends PureComponent {
                     </div>
                     <div className="cancel-button">
                         <button onClick={this.props.toggleModal}>Cancelar</button>
-                        // No encuentro la flecha propuesta en los visuales, asi que pongo texto
                         <button onClick={this.order}>Ordenar {!this.state.orderByAsc ? 'up' : 'down'}</button>
                     </div>
                 </div>
